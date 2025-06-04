@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pocetak4/models/meal.dart';
+import 'package:pocetak4/widgets/meal_item.dart';
 
 class MealsScreen extends StatelessWidget {
   final String title;
@@ -11,7 +12,7 @@ class MealsScreen extends StatelessWidget {
       appBar: AppBar(title: Text(title)),
       body: ListView.builder(
         itemCount: meals.length,
-        itemBuilder: (item, index) => Text(meals[index].title),
+        itemBuilder: (item, index) => MealItem(meal: meals[index]),
       ),
     );
   }

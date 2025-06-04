@@ -152,6 +152,12 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "transparent_image",
+      "rootUri": "file:///Users/orhanpojskic/.pub-cache/hosted/pub.dev/transparent_image-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "vector_math",
       "rootUri": "file:///Users/orhanpojskic/.pub-cache/hosted/pub.dev/vector_math-2.1.4",
       "packageUri": "lib/",
@@ -170,7 +176,7 @@
       "languageVersion": "3.7"
     }
   ],
-  "generated": "2025-06-03T22:47:26.243137Z",
+  "generated": "2025-06-04T16:59:18.501472Z",
   "generator": "pub",
   "generatorVersion": "3.7.2",
   "flutterRoot": "file:///Users/orhanpojskic/Flutter2025/flutter",
