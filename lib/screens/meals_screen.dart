@@ -4,7 +4,7 @@ import 'package:pocetak4/widgets/meal_item.dart';
 import 'package:pocetak4/screens/meal_detail_screen.dart';
 
 class MealsScreen extends StatelessWidget {
-  final String title;
+  final String? title;
   final List<Meal> meals;
   void pushToMealDetailScreen(BuildContext context, Meal meal) {
     Navigator.of(
@@ -12,12 +12,13 @@ class MealsScreen extends StatelessWidget {
     ).push(MaterialPageRoute(builder: (ctx) => MealDetailScreen(meal: meal)));
   }
 
-  const MealsScreen({super.key, required this.title, required this.meals});
+  const MealsScreen({super.key, this.title, required this.meals});
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text(title)),
-      body: ListView.builder(
+    Widget content = Text("Prazan niz");
+
+    if (meals.isNotEmpty) {
+      content = ListView.builder(
         itemCount: meals.length,
         itemBuilder:
             (item, index) => MealItem(
@@ -26,7 +27,13 @@ class MealsScreen extends StatelessWidget {
                 pushToMealDetailScreen(context, meal);
               },
             ),
-      ),
-    );
+      );
+    }
+
+    if (title == null) {
+      return content;
+    }
+
+    return Scaffold(appBar: AppBar(title: Text(title!)), body: content);
   }
 }
