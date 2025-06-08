@@ -3,13 +3,28 @@ import 'package:transparent_image/transparent_image.dart';
 import 'package:pocetak4/models/meal.dart';
 
 class MealDetailScreen extends StatelessWidget {
-  const MealDetailScreen({super.key, required this.meal});
+  const MealDetailScreen({
+    super.key,
+    required this.meal,
+    required this.onFavoteTapped,
+  });
 
   final Meal meal;
+  final void Function(Meal meal) onFavoteTapped;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(meal.title)),
+      appBar: AppBar(
+        title: Text(meal.title),
+        actions: [
+          IconButton(
+            onPressed: () {
+              onFavoteTapped(meal);
+            },
+            icon: Icon(Icons.star),
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

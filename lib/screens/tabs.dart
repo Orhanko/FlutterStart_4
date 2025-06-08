@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pocetak4/screens/categories_screen.dart';
 import 'package:pocetak4/screens/meals_screen.dart';
+import 'package:pocetak4/models/meal.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -12,6 +13,7 @@ class TabsScreen extends StatefulWidget {
 
 class _TabsScreenState extends State<TabsScreen> {
   int selectedPageIndex = 0;
+  final List<Meal> favoriteMeals = [];
 
   void selectPage(int index) {
     setState(() {
@@ -19,13 +21,62 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
+  void toggleFavoriteMeal(Meal meal) {
+    final isExisting = favoriteMeals.contains(meal);
+
+    if (isExisting) {
+      setState(() {
+        favoriteMeals.remove(meal);
+        showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: Text('Removed Successfully'),
+                content: Text(
+                  '${meal.title} has been removed from the list of favorite items!',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('OK'),
+                  ),
+                ],
+              ),
+        );
+      });
+    } else {
+      setState(() {
+        favoriteMeals.add(meal);
+        showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: Text('Added Successfully'),
+                content: Text(
+                  '${meal.title} has been added into the list of favorite items!',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: Text('OK'),
+                  ),
+                ],
+              ),
+        );
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    Widget activePage = CategoriesScreen();
+    Widget activePage = CategoriesScreen(onFavoteTapped: toggleFavoriteMeal);
     var activePageTitle = "Categories";
 
     if (selectedPageIndex == 1) {
-      activePage = MealsScreen(meals: []);
+      activePage = MealsScreen(
+        meals: favoriteMeals,
+        onFavoriteTapped: toggleFavoriteMeal,
+      );
       activePageTitle = "Favorites";
     }
     return Scaffold(

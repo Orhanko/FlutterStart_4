@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pocetak4/screens/categories_screen.dart';
 import 'package:pocetak4/screens/tabs.dart';
 
 final theme = ThemeData(

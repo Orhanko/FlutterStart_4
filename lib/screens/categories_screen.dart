@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:pocetak4/models/data/dummy_data.dart';
 import 'package:pocetak4/screens/meals_screen.dart';
 import 'package:pocetak4/widgets/category_grid_item.dart';
+import 'package:pocetak4/models/meal.dart';
 
 class CategoriesScreen extends StatelessWidget {
+  final void Function(Meal meal) onFavoteTapped;
   void pushToMeals(BuildContext context, Category category) {
     final filteredMeals =
         dummyMeals
@@ -13,12 +15,16 @@ class CategoriesScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder:
-            (ctx) => MealsScreen(title: category.title, meals: filteredMeals),
+            (ctx) => MealsScreen(
+              title: category.title,
+              meals: filteredMeals,
+              onFavoriteTapped: onFavoteTapped,
+            ),
       ),
     );
   }
 
-  const CategoriesScreen({super.key});
+  const CategoriesScreen({super.key, required this.onFavoteTapped});
   @override
   Widget build(BuildContext context) {
     return GridView(
