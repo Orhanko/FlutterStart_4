@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pocetak4/screens/categories_screen.dart';
 import 'package:pocetak4/screens/meals_screen.dart';
 import 'package:pocetak4/models/meal.dart';
+import 'package:pocetak4/widgets/main_drawer.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
@@ -19,6 +20,10 @@ class _TabsScreenState extends State<TabsScreen> {
     setState(() {
       selectedPageIndex = index;
     });
+  }
+
+  void setScreen(String identifier) {
+    print(identifier);
   }
 
   void toggleFavoriteMeal(Meal meal) {
@@ -81,6 +86,7 @@ class _TabsScreenState extends State<TabsScreen> {
     }
     return Scaffold(
       appBar: AppBar(title: Text(activePageTitle)),
+      drawer: MainDrawer(onSelectListTile: setScreen),
       body: activePage,
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: selectedPageIndex,
