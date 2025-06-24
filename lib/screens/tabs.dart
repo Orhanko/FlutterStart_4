@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:pocetak4/models/data/dummy_data.dart';
+import 'package:pocetak4/providers/meals_provider.dart';
 import 'package:pocetak4/screens/categories_screen.dart';
 import 'package:pocetak4/screens/filters_screen.dart';
 import 'package:pocetak4/screens/meals_screen.dart';
 import 'package:pocetak4/models/meal.dart';
 import 'package:pocetak4/widgets/main_drawer.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 const kInitialFilter = {
   Filter.glutenFree: false,
@@ -13,15 +15,15 @@ const kInitialFilter = {
   Filter.vegan: false,
 };
 
-class TabsScreen extends StatefulWidget {
+class TabsScreen extends ConsumerStatefulWidget {
   const TabsScreen({super.key});
   @override
-  State<TabsScreen> createState() {
+  ConsumerState<TabsScreen> createState() {
     return _TabsScreenState();
   }
 }
 
-class _TabsScreenState extends State<TabsScreen> {
+class _TabsScreenState extends ConsumerState<TabsScreen> {
   int selectedPageIndex = 0;
   Map<Filter, bool> selectedFilters = kInitialFilter;
   final List<Meal> favoriteMeals = [];
@@ -94,8 +96,9 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final meals = ref.watch(mealsProvider);
     final availableMeals =
-        dummyMeals.where((meal) {
+        meals.where((meal) {
           if (selectedFilters[Filter.glutenFree]! && !meal.isGlutenFree) {
             return false;
           }

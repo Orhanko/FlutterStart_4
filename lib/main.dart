@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pocetak4/screens/tabs.dart';
 
 final theme = ThemeData(
@@ -9,7 +10,7 @@ final theme = ThemeData(
   ),
 );
 void main() {
-  runApp(const App());
+  runApp(ProviderScope(child: const App()));
 }
 
 class App extends StatelessWidget {
