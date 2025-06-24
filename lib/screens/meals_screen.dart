@@ -6,23 +6,14 @@ import 'package:pocetak4/screens/meal_detail_screen.dart';
 class MealsScreen extends StatelessWidget {
   final String? title;
   final List<Meal> meals;
-  final void Function(Meal meal) onFavoriteTapped;
+
   void pushToMealDetailScreen(BuildContext context, Meal meal) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder:
-            (ctx) =>
-                MealDetailScreen(meal: meal, onFavoteTapped: onFavoriteTapped),
-      ),
-    );
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute(builder: (ctx) => MealDetailScreen(meal: meal)));
   }
 
-  const MealsScreen({
-    super.key,
-    this.title,
-    required this.meals,
-    required this.onFavoriteTapped,
-  });
+  const MealsScreen({super.key, this.title, required this.meals});
   @override
   Widget build(BuildContext context) {
     Widget content = Center(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pocetak4/models/data/dummy_data.dart';
+import 'package:pocetak4/providers/favorites_provider.dart';
 import 'package:pocetak4/providers/meals_provider.dart';
 import 'package:pocetak4/screens/categories_screen.dart';
 import 'package:pocetak4/screens/filters_screen.dart';
@@ -26,7 +26,6 @@ class TabsScreen extends ConsumerStatefulWidget {
 class _TabsScreenState extends ConsumerState<TabsScreen> {
   int selectedPageIndex = 0;
   Map<Filter, bool> selectedFilters = kInitialFilter;
-  final List<Meal> favoriteMeals = [];
 
   void selectPage(int index) {
     setState(() {
@@ -44,52 +43,6 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
       );
       setState(() {
         selectedFilters = result ?? kInitialFilter;
-      });
-    }
-  }
-
-  void toggleFavoriteMeal(Meal meal) {
-    final isExisting = favoriteMeals.contains(meal);
-
-    if (isExisting) {
-      setState(() {
-        favoriteMeals.remove(meal);
-        showDialog(
-          context: context,
-          builder:
-              (context) => AlertDialog(
-                title: Text('Removed Successfully'),
-                content: Text(
-                  '${meal.title} has been removed from the list of favorite items!',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text('OK'),
-                  ),
-                ],
-              ),
-        );
-      });
-    } else {
-      setState(() {
-        favoriteMeals.add(meal);
-        showDialog(
-          context: context,
-          builder:
-              (context) => AlertDialog(
-                title: Text('Added Successfully'),
-                content: Text(
-                  '${meal.title} has been added into the list of favorite items!',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(context).pop(),
-                    child: Text('OK'),
-                  ),
-                ],
-              ),
-        );
       });
     }
   }
@@ -113,17 +66,12 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
           }
           return true;
         }).toList();
-    Widget activePage = CategoriesScreen(
-      onFavoteTapped: toggleFavoriteMeal,
-      availableMeals: availableMeals,
-    );
+    Widget activePage = CategoriesScreen(availableMeals: availableMeals);
     var activePageTitle = "Categories";
 
     if (selectedPageIndex == 1) {
-      activePage = MealsScreen(
-        meals: favoriteMeals,
-        onFavoriteTapped: toggleFavoriteMeal,
-      );
+      final favoriteMeals = ref.watch(favoriteMealsProvider);
+      activePage = MealsScreen(meals: favoriteMeals);
       activePageTitle = "Favorites";
     }
     return Scaffold(

@@ -6,7 +6,6 @@ import 'package:pocetak4/widgets/category_grid_item.dart';
 import 'package:pocetak4/models/meal.dart';
 
 class CategoriesScreen extends StatelessWidget {
-  final void Function(Meal meal) onFavoteTapped;
   final List<Meal> availableMeals;
   void pushToMeals(BuildContext context, Category category) {
     final filteredMeals =
@@ -16,20 +15,12 @@ class CategoriesScreen extends StatelessWidget {
     Navigator.of(context).push(
       MaterialPageRoute(
         builder:
-            (ctx) => MealsScreen(
-              title: category.title,
-              meals: filteredMeals,
-              onFavoriteTapped: onFavoteTapped,
-            ),
+            (ctx) => MealsScreen(title: category.title, meals: filteredMeals),
       ),
     );
   }
 
-  const CategoriesScreen({
-    super.key,
-    required this.onFavoteTapped,
-    required this.availableMeals,
-  });
+  const CategoriesScreen({super.key, required this.availableMeals});
   @override
   Widget build(BuildContext context) {
     return GridView(
